@@ -8,12 +8,28 @@ interface HomeView {
   first: number;
   setPage: Dispatch<SetStateAction<number>>;
   data: IUsersData | undefined;
+  handleSort: (field: string) => void;
+  sortOrder: string;
+  sortField: string;
 }
 
-const HomeView = ({ data, page, setPage, first }: HomeView) => (
+const HomeView = ({
+  data,
+  page,
+  setPage,
+  first,
+  handleSort,
+  sortOrder,
+  sortField,
+}: HomeView) => (
   <main className="flex min-h-screen flex-col items-center justify-start p-24 gap-y-10">
     <h1 className="font-bold text-3xl">Users</h1>
-    <UsersTable data={data?.users ?? []} />
+    <UsersTable
+      data={data?.users ?? []}
+      handleSort={handleSort}
+      sortField={sortField}
+      sortOrder={sortOrder}
+    />
     <Pagination
       page={page}
       setPage={setPage}

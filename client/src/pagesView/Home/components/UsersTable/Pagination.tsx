@@ -36,6 +36,7 @@ const Pagination = ({
         >
           Previous
         </button>
+        <p className="text-black font-medium">{`Page ${page} of ${totalPages}`}</p>
         <button
           onClick={handleNextPage}
           disabled={page === totalPages}

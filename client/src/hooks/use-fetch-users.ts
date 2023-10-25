@@ -11,10 +11,25 @@ export interface IUsersData {
   };
 }
 
-export const useFetchUsers = (first: number, page: number) => {
+export const useFetchUsers = (
+  first: number,
+  page: number,
+  sortField: string,
+  sortOrder: string
+) => {
   const FETCH_USERS = gql`
-    query FetchUsers($first: Int, $page: Int) {
-      users(first: $first, page: $page) {
+    query FetchUsers(
+      $first: Int
+      $page: Int
+      $sortField: String
+      $sortOrder: String
+    ) {
+      users(
+        first: $first
+        page: $page
+        sortField: $sortField
+        sortOrder: $sortOrder
+      ) {
         id
         firstName
         age
@@ -29,8 +44,9 @@ export const useFetchUsers = (first: number, page: number) => {
     variables: {
       first,
       page,
+      sortField,
+      sortOrder,
     },
-    fetchPolicy: 'cache-first',
   } as QueryHookOptions<IUsersData>);
 
   return {

@@ -4,6 +4,18 @@ const { GraphQLString, GraphQLInt, GraphQLSchema, GraphQLList, GraphQLNonNull} =
 
 const { GraphQLObjectType, } = graphql;
 
+function sortUsers(users, sortField, sortOrder) {
+  return users.sort((a, b) => {
+    if (sortOrder === 'asc') {
+      return a[sortField] > b[sortField] ? 1 : -1;
+    } else if (sortOrder === 'desc') {
+      return a[sortField] < b[sortField] ? 1 : -1;
+    } else {
+      return a[sortField] > b[sortField] ? 1 : -1;
+    }
+  });
+}
+
 const TotalItemsType = new GraphQLObjectType({
   name: 'TotalItems',
   fields: () => ({
