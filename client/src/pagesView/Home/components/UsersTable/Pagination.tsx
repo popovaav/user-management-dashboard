@@ -14,6 +14,7 @@ const Pagination = ({
   setPage,
 }: Pagination) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const isShowButton = totalPages !== 1 && totalPages !== 0;
 
   const handlePrevPage = () => {
     if (page !== 1) {
@@ -26,8 +27,8 @@ const Pagination = ({
   };
 
   return (
-    <div>
-      <div className="flex gap-x-3 font-bold">
+    <div className="flex gap-x-3 font-bold absolute bottom-10">
+      {isShowButton && (
         <button
           onClick={handlePrevPage}
           disabled={page === 1}
@@ -36,7 +37,11 @@ const Pagination = ({
         >
           Previous
         </button>
-        <p className="text-black font-medium">{`Page ${page} of ${totalPages}`}</p>
+      )}
+      <p className="text-black font-medium">{`Page ${
+        totalPages > 1 ? page : '1'
+      } of ${totalPages || 1}`}</p>
+      {isShowButton && (
         <button
           onClick={handleNextPage}
           disabled={page === totalPages}
@@ -45,7 +50,7 @@ const Pagination = ({
         >
           Next
         </button>
-      </div>
+      )}
     </div>
   );
 };
