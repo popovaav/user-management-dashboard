@@ -6,7 +6,10 @@ export interface ITotalItemsData {
   };
 }
 
-export const useGetTotalItems = (searchName: string, searchAge: string) => {
+export const useGetTotalItems = (
+  searchName: string | null,
+  searchAge: string | null
+) => {
   const GET_TOTAL_ITEMS = gql`
     query GetTotalItems($searchName: String, $searchAge: String) {
       totalItems(searchName: $searchName, searchAge: $searchAge) {

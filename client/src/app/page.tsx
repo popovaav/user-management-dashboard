@@ -6,9 +6,11 @@ import HomeView from '@/pagesView/HomeView';
 import { AGE, ASC, DESC, FIRST, NAME } from '@/constants/constants';
 import { useGetTotalItems } from '@/hooks/use-get-total-items';
 import useQueryParams from '@/hooks/use-query-params';
+import { useDebouncedCallback } from 'use-debounce';
 
 export default function Home() {
-  const { setQueryParam, getQueryParam, queryParams } = useQueryParams();
+  const { setQueryParam, getQueryParam, hasQueryParams, removeAllQueryParams } =
+    useQueryParams();
   const [page, setPage] = useState(1);
   const [sortField, setSortField] = useState(NAME);
   const [sortOrder, setSortOrder] = useState(ASC);
@@ -18,13 +20,24 @@ export default function Home() {
     page,
     sortField,
     sortOrder,
-    getQueryParam(NAME) || valueInput?.firstName,
-    getQueryParam(AGE) || valueInput?.age
+    getQueryParam(NAME),
+    getQueryParam(AGE)
   );
   const { data: dataTotal } = useGetTotalItems(
-    getQueryParam(NAME) || valueInput?.firstName,
-    getQueryParam(AGE) || valueInput?.age
+    getQueryParam(NAME),
+    getQueryParam(AGE)
   );
+
+  const debouncedSetQueryParam = useDebouncedCallback((id, value) => {
+    setQueryParam(id, value);
+  }, 700);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = event.target;
+    setValueInput({ ...valueInput, [id]: value });
+    debouncedSetQueryParam(id, value);
+    setPage(1);
+  };
 
   const handleSort = (field: string) => {
     if (field === sortField) {
@@ -35,10 +48,9 @@ export default function Home() {
     }
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = event.target;
-    setValueInput({ ...valueInput, [id]: value });
-    setQueryParam(id, value);
+  const handleClearFilters = () => {
+    removeAllQueryParams();
+    setValueInput({ firstName: '', age: '' });
   };
 
   return (
@@ -54,6 +66,8 @@ export default function Home() {
       valueInput={valueInput}
       handleInputChange={handleInputChange}
       loading={loading}
+      disabled={!hasQueryParams()}
+      handleClearFilters={handleClearFilters}
     />
   );
 }

@@ -16,8 +16,8 @@ export const useFetchUsers = (
   page: number,
   sortField: string,
   sortOrder: string,
-  searchName: string,
-  searchAge: string
+  searchName: string | null,
+  searchAge: string | null
 ) => {
   const FETCH_USERS = gql`
     query FetchUsers(
@@ -52,6 +52,7 @@ export const useFetchUsers = (
       searchName,
       searchAge,
     },
+    fetchPolicy: 'no-cache',
   } as QueryHookOptions<IUsersData>);
 
   return {

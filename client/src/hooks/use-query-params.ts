@@ -1,3 +1,5 @@
+'use client';
+
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
@@ -28,9 +30,20 @@ export default function useQueryParams() {
     return searchParams.get(queryName);
   };
 
+  const removeAllQueryParams = () => {
+    router.replace(pathname);
+  };
+
+  const hasQueryParams = () => {
+    const keys = searchParams.keys();
+    return !keys.next().done;
+  };
+
   return {
     queryParams: searchParams,
     setQueryParam,
     getQueryParam,
+    removeAllQueryParams,
+    hasQueryParams,
   };
 }
