@@ -26,6 +26,7 @@ const SortFilterHeaderCell = ({
   <th
     className="text-start p-2.5 min-w-[305px] capitalize cursor-pointer"
     onClick={(event) => onSortClick(event, sortBy)}
+    aria-label={id}
   >
     <div className="flex gap-x-3 items-center">
       <input

@@ -1,11 +1,10 @@
-import { Dispatch, SetStateAction } from 'react';
 import PaginationButton from './PaginationButton';
 
 interface Pagination {
   totalItems: number;
   itemsPerPage: number;
   page: number;
-  setPage: Dispatch<SetStateAction<number>>;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Pagination = ({

@@ -52,7 +52,6 @@ export const useFetchUsers = (
       searchName,
       searchAge,
     },
-    fetchPolicy: 'no-cache',
   } as QueryHookOptions<IUsersData>);
 
   return {
