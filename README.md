@@ -29,8 +29,8 @@ cd client && npm run dev
 **Run tests**:
 
  ```bash
-   cd client && npm test
-   ```
+ cd client && npm test
+ ```
 
 
 Open http://localhost:3000 in your web browser to see the project's result.
